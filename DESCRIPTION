@@ -1,0 +1,23 @@
+Package: cdcperineq
+Title: Análisis de desigualdad social
+Version: 0.0.0.9000
+Authors@R: c(
+    person(given = "Dante",
+           family = "Castro Garro",
+           role = c("aut", "cre"),
+           email = "dante.tcg@gmail.com"),
+    person(given = "César",
+           family = "Munayco Escate",
+           role = c("aut")))
+Description: Análisis de la desigualdad social mediante tablas y gráficas usando
+    como base la población, determinantes sociales y enfermedades en diferentes
+    años para diferentes regiones.
+Imports:
+    dplyr,
+    ggplot2,
+    cowplot
+License: `use_mit_license()`
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.0

@@ -7,7 +7,7 @@
 #' @param leyenda String. Nombre de la leyenda. NULL por defecto.
 #' @export
 #' @examples
-#' ineq_gra()
+#' brecha_gra()
 
 brecha_gra = function(
         data_gap,

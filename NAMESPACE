@@ -3,6 +3,7 @@
 export(brecha_gra)
 export(brecha_tab)
 export(data_proc)
+export(desi_app)
 export(ineq_gra)
 export(ineq_tab)
 export(lag_semisum)

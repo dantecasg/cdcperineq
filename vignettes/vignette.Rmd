@@ -1,0 +1,147 @@
+---
+title: "cdcperineq"
+subtitle: "Análisis de las desigualdades sociales en salud"
+author: "Dante T. Castro Garro"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+bibliography: "vignette.bib"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE, error = FALSE, message = FALSE, fig.align = 'center'
+)
+```
+
+```{r setup, include = FALSE}
+library(cdcperineq)
+library(dplyr)
+library(ggplot2)
+library(cowplot)
+```
+
+# Resumen
+
+El paquete `cdcperineq` permite la visualización de las desigualdades sociales que asentúan los efectos de alguna enfermedad. El paquete ofrece dos tipos de análisis:
+
+- Análisis por desigualdades.
+
+- Análisis por brechas.
+
+El presente manual solo pretende demostrar el uso de las funciones del paquete. Para la interpretación y análisis de la información se sugiere revisar el trabajo de @article
+
+# Data de prueba
+
+`cdcperineq` viene con una data integrada que representa diferentes determinantes sociales a nivel de latinoamérica para diferentes periodos. Además, presenta información sobre la incidencia de tuberculosis, la cual será utilizada a manera de ejmplo.
+
+```{r lib}
+library(cdcperineq)
+library(dplyr)
+library(ggplot2)
+library(cowplot)
+
+glimpse(ineq_data)
+```
+
+Para el correcto uso de las funciones, la data debe tener un formato específico. Esto puede realizarse con la función `data_proc`. Este paso asegura también que el usuario sepa las variables que se utilizarán y el tipo de análisis.
+
+# Funciones para el análisis de la desigualdad
+
+En el siguiente ejemplo se evaluará la desgualdad para los años 2000, 2005 y 2010 para la tuberculosis en base a la esperanza de vida al nacer. La función requiere los años a analizar (`periodo`), el parámetro social (`vari.x`), la razón de incidencia (`vari.ir`) y la cantidad de casos de una enfermedad (`vari.num`). También es necesario especificar cuál es la columna que tiene los años (`year`), las regiones (`region`) y la cantidad de población (`población`).
+
+```{r desi.data}
+# 
+tabla = data_proc(
+    data = ineq_data,
+    tipo = 'desigualdad',
+    periodo = c(2000, 2005, 2010),
+    vari.x = 'lexp',
+    vari.ir = 'ir_tb',
+    vari.num = 'num_tb_cases',
+    anhos = 'year',
+    region = 'country',
+    poblacion = 'population')
+```
+
+A partir de `tabla` se pueden hacer algunos gráficos como la desgiualdad social
+
+```{r desi.graf, fig.width = 6}
+ineq_gra(
+    data = tabla,
+    xlab = 'Gradiente de población a nivel de país definido por esperanza de vida al nacer',
+    ylab = 'Razón de incidencia de tuberculosis por 100,000 peronas')
+```
+
+o tablas con estadísticas que pueden complementar el análisis.
+
+```{r desi.tab}
+ineq_tab(tabla)
+```
+
+Ambas funciones son muy fáciles de utilizar.
+
+# Funciones para el análisis de las brechas
+
+El procedimiento es prácticamente el mismo que el realizado para el análisis de la desigualdad. Las diferencias están en indicarle a `data_proc` que ordene la data según el formato de brechas.
+
+```{r brecha.data}
+tabla = data_proc(
+    data = ineq_data,
+    tipo = 'brecha',
+    periodo = c(2000, 2005, 2010),
+    vari.x = 'lexp',
+    vari.ir = 'ir_tb',
+    vari.num = 'num_tb_cases',
+    anhos = 'year',
+    region = 'country',
+    poblacion = 'population')
+```
+
+Para realizar las gráficas y tablas, las funciones son similares al de desigualdades, solo que con un nombre diferente.
+
+```{r brecha.gra, fig.width = 6}
+brecha_gra(
+    data = tabla,
+    xlab = 'Cuartiles de esperanza de vida al nacer',
+    ylab = 'Razón de incidencia estimada promedio de tuberculosis')
+```
+
+```{r brecha.tab}
+brecha_tab(tabla)
+```
+
+# Web App
+
+El paquete también incluye una función que permite visualizar la información disponible de manera interactiva.
+
+```{r desi.app, eval = FALSE}
+# Parámetros sociales
+soc_var = c(
+    'Esperanza de vida' = 'lexp',
+    'Gasto en salud' = 'hexp',
+    'Acceso a instalaciones mejoradas de saneamiento' = 'impsfac',
+    'Tasa de detección de tuberculosis' = 'pnotified')
+
+# Parámetros de salud
+salud = list('Tuberculosis' = c(IR = 'ir_tb', Num = 'num_tb_cases'))
+
+# Años de análisis
+years = c(2000, 2005, 2010)
+
+# Web app
+desi_app(
+    data = ineq_data,
+    salud = salud, 
+    social = social,
+    years = years)
+```
+
+# Referencias

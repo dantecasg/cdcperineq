@@ -19,5 +19,5 @@ brecha_gra(data_gap, xlab = NULL, ylab = NULL, leyenda = "Quantile")
 Cálculo de los coeficientes de una regresión lineal múltiple
 }
 \examples{
-ineq_gra()
+brecha_gra()
 }

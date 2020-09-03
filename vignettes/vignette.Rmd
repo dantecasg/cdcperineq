@@ -26,6 +26,7 @@ library(cdcperineq)
 library(dplyr)
 library(ggplot2)
 library(cowplot)
+library(optimx)
 ```
 
 # Resumen
@@ -78,6 +79,13 @@ ineq_gra(
     data = tabla,
     xlab = 'Gradiente de población a nivel de país definido por esperanza de vida al nacer',
     ylab = 'Razón de incidencia de tuberculosis por 100,000 peronas')
+```
+
+```{r desi.graf2, fig.width = 6}
+ineq_reg(
+    data = tabla,
+    xlab = 'Gradiente de población a nivel de país definido por esperanza de vida al nacer',
+    ylab = 'Grafduebte de la razón de incidencia de tuberculosis por 100,000 peronas')
 ```
 
 o tablas con estadísticas que pueden complementar el análisis.

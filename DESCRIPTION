@@ -1,6 +1,6 @@
 Package: cdcperineq
 Title: Análisis de desigualdad social
-Version: 0.0.0.9002
+Version: 0.0.0.9003
 Authors@R: c(
     person(given = "Dante",
            family = "Castro Garro",
@@ -16,12 +16,13 @@ Imports:
     dplyr,
     ggplot2,
     cowplot,
+    optimx,
     shiny
 License: `use_mit_license()`
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Depends: 
     R (>= 2.10)
 Suggests: 
